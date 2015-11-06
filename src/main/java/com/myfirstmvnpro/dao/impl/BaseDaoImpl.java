@@ -1,5 +1,7 @@
 package com.myfirstmvnpro.dao.impl;
 
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.util.Collection;
 import java.util.List;
 
@@ -9,19 +11,23 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import com.myfirstmvnpro.dao.inter.BaseDao;
-@Repository
+
 public class BaseDaoImpl<T> implements BaseDao<T>{
 	@Autowired(required=true)
 	private SessionFactory sessionFactory;
 	
 	protected Class<T> entityClass;
 	
+	@SuppressWarnings("unchecked")
 	public BaseDaoImpl() {
+		Type t = getClass().getGenericSuperclass();
+		
+		if(t instanceof ParameterizedType){
+			ParameterizedType type =(ParameterizedType) t;
+			this.entityClass =(Class<T>) type.getActualTypeArguments()[0];
+		}
 	}
-	public BaseDaoImpl(Class<T> entityClass) {
-		this.entityClass = entityClass;
-	}
-
+	
 	public Class<T> getEntityClass() {
 		return entityClass;
 	}
@@ -50,7 +56,7 @@ public class BaseDaoImpl<T> implements BaseDao<T>{
      * @return session
      */
     public Session getSession() {
-        //��Ҫ����������ܵõ�CurrentSession
+        //获取当前的CurrentSession
         return sessionFactory.getCurrentSession();
     }
     
@@ -78,11 +84,9 @@ public class BaseDaoImpl<T> implements BaseDao<T>{
 	public void delete(T t) {
 		this.getSession().delete(t);
 	}
-
-	/**
-	 * ���IDɾ�����
-	 */
-    
+  /**
+   * @param Id 
+   */
 	public boolean deleteById(int Id) {
 		T t = this.get(Id);
 		if(t==null)
@@ -91,16 +95,16 @@ public class BaseDaoImpl<T> implements BaseDao<T>{
 		return true;
 	}
 	/**
-	 * ����ɾ�����
+	 * 删除指定集合中的
 	 */
 	public void deleteAll(Collection<T> entities) {
 		for(T t:entities)
 			this.delete(t);
 	}
 	/**
-	 * ִ��HQL���
-	 * @param hqlString
-	 * @param values ������������
+	 * 根据hql来查询
+	 * @param hqlString hql语句
+	 * @param values 查询条件
 	 */
 	public void queryHql(String hqlString, Object[] values) {
 		Query query = this.getSession().createQuery(hqlString);

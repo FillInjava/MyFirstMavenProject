@@ -20,7 +20,14 @@ public class TestUserService {
 		UserController controller = ac.getBean(UserController.class);  
         User user = controller.getById();
         
-        controller.registe();
+        User user2 = new User();
+        user2.setId(5);
+        user2.setName("cc");
+        user2.setUsername("cc");
+        user2.setEmail("www.cc.com");
+        user2.setPassword("cc");
+        
+        controller.registe(user2);
         System.out.println(user);
 	}
 }

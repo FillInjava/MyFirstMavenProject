@@ -18,7 +18,7 @@
 	<bean id="userDao" class="com.myfirstmvnpro.dao.impl.UserDaoImpl">
 	
 	</bean>-->
-	<context:component-scan base-package="com.myfirstmvnpro.*"></context:component-scan>
+	<context:component-scan base-package="com.myfirstmvnpro"></context:component-scan>
 	<context:annotation-config/>
 	<!--  
 	<bean class="org.springframework.beans.factory.annotation.RequiredAnnotationBeanPostProcessor"/> -->
@@ -83,6 +83,9 @@
 		</property>
 		
 	</bean>-->
+	<!-- hibernate异常转Spring异常 -->
+	<bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
+	<!-- 配置hibernate SessionFactory -->
 	<bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
 		<property name="dataSource" ref="dataSource"/>
 		<property name="hibernateProperties">
@@ -124,7 +127,7 @@
         class="org.springframework.orm.hibernate4.HibernateTransactionManager">  
         <property name="sessionFactory" ref="sessionFactory" />  
     </bean>  
-  
+    
     <!-- 开启事务管理注解 -->  
     <tx:annotation-driven transaction-manager="transactionManager"/>
 </beans>

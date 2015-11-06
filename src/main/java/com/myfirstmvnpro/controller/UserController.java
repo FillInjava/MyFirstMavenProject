@@ -1,7 +1,9 @@
 package com.myfirstmvnpro.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.TransactionDefinition;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -12,16 +14,9 @@ import com.myfirstmvnpro.service.UserService;
 public class UserController {
     @Autowired  
     private UserService userService;  
-      
+    
     @RequestMapping(value="/registe", method=RequestMethod.GET)  
-    public String registe() {  
-        User user = new User();
-        user.setId(4);
-        user.setName("domain");
-        user.setUsername("ceshi");
-        user.setEmail("www.sobey.com");
-        user.setPassword("aaa");
-        
+    public String registe(User user) {  
         userService.registe(user);  
         return "index";  
     }  
