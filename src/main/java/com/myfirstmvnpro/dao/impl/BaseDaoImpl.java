@@ -5,15 +5,17 @@ import java.lang.reflect.Type;
 import java.util.Collection;
 import java.util.List;
 
+import javax.annotation.Resource;
+
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import com.myfirstmvnpro.dao.inter.BaseDao;
-
+@Repository
 public class BaseDaoImpl<T> implements BaseDao<T>{
-	@Autowired(required=true)
+	@Resource
 	private SessionFactory sessionFactory;
 	
 	protected Class<T> entityClass;

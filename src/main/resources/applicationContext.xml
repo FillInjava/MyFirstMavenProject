@@ -18,7 +18,10 @@
 	<bean id="userDao" class="com.myfirstmvnpro.dao.impl.UserDaoImpl">
 	
 	</bean>-->
-	<context:component-scan base-package="com.myfirstmvnpro"></context:component-scan>
+	<context:component-scan base-package="com.myfirstmvnpro" use-default-filters="true">
+		<!-- 通过exclude-filter 把所有 @Controller注解的表现层控制器组件排除 -->
+		<context:exclude-filter type="regex" expression=".*Controller$"/>
+	</context:component-scan>	
 	<context:annotation-config/>
 	<!--  
 	<bean class="org.springframework.beans.factory.annotation.RequiredAnnotationBeanPostProcessor"/> -->
@@ -129,5 +132,17 @@
     </bean>  
     
     <!-- 开启事务管理注解 -->  
-    <tx:annotation-driven transaction-manager="transactionManager"/>
+    <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true"/>
+    <!--  
+    <aop:config>  
+        <aop:pointcut id="serviceMethod"  
+                      expression="execution(public * com.myfirstmvnpro..*Service.*(..))"/>  
+        <aop:advisor pointcut-ref="serviceMethod" advice-ref="txAdvice"/>  
+    </aop:config>  
+  
+    <tx:advice id="txAdvice" transaction-manager="txManager">  
+        <tx:attributes>  
+            <tx:method name="*"/>  
+        </tx:attributes>  
+    </tx:advice>-->
 </beans>

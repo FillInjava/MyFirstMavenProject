@@ -1,19 +1,26 @@
 package com.myfirstmvnpro.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.List;
+
+import javax.annotation.Resource;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.myfirstmvnpro.dao.impl.BaseDaoImpl;
-import com.myfirstmvnpro.dao.impl.UserDaoImpl;
 import com.myfirstmvnpro.dao.inter.BaseDao;
 import com.myfirstmvnpro.domain.User;
 @Service("userService")
+@Transactional(readOnly = true)
 public class UserService {
-	@Autowired
+	@Resource(name="userDaoImpl")
 	private BaseDao<User> userDaoImpl;
-	
-	@Transactional(readOnly=false)  
+	/**
+	 * 只读。添加不进去
+	 * @param user
+	 * @return
+	 */
+	@Transactional(readOnly=true)  
     public boolean registe(User user) {  
 		userDaoImpl.save(user);  
         return false;  
@@ -21,6 +28,10 @@ public class UserService {
 	@Transactional(readOnly=true)
 	public User getUserById(int id){
 		return userDaoImpl.get(id);
+	}
+	@Transactional
+	public List<User> getAllUsers(){
+		return userDaoImpl.getListByHQL("from User ", null);
 	}
 	
 }
