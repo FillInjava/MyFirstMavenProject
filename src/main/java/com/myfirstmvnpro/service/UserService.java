@@ -33,5 +33,9 @@ public class UserService {
 	public List<User> getAllUsers(){
 		return userDaoImpl.getListByHQL("from User ", null);
 	}
+	@Transactional(readOnly=false)
+	public void save(User user) {
+		userDaoImpl.save(user);
+	}
 	
 }

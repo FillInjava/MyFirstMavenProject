@@ -1,5 +1,6 @@
 package com.myfirstmvnpro.domain.test;
 
+import java.lang.reflect.Field;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -16,41 +17,56 @@ import com.myfirstmvnpro.service.UserService;
 
 public class TestUser {
 
-	public static void main(String[] args) {
-		ApplicationContext ac = new ClassPathXmlApplicationContext("applicationContext.xml");
+	public static void main(String[] args) throws Exception {
+		//ApplicationContext ac = new ClassPathXmlApplicationContext("applicationContext.xml");
 //		User user = (User) ac.getBean("user");
 //		System.out.println(user);
 		
-		User user = new User();
-		user.setId(1);
+		//User user = new User();
+		//user.setId(1);
 		
-		UserService us =(UserService) ac.getBean("userService");
+		//UserService us =(UserService) ac.getBean("userService");
 		//user = us.getUserDao().get(user.getId());
 		
-		System.out.println(us);
+		//System.out.println(us);
+//		Integer a = 1000, b = 1000; 
+//		System.out.println(a == b);//1
+//		Integer c = 100, d = 100; 
+//		System.out.println(c == d);//2
+		  Class cache = Integer.class.getDeclaredClasses()[0]; //1
+	      Field myCache = cache.getDeclaredField("cache"); //2
+	      myCache.setAccessible(true);//3
+	  
+	      Integer[] newCache = (Integer[]) myCache.get(cache); //4
+	      System.out.println(newCache[132]);
+	      newCache[132] = newCache[133]; //5
+	  
+	      int a = 2;
+	      int b = a + a;
+	      System.out.printf("%d + %d = %d", a, a, b); //
 	}
 	
 	
 	public static void test1(ApplicationContext ac){
-		//Í¨¹ý±ðÃû»ñÈ¡£¬±ðÃû¿ÉÒÔÓÐ¶à¸ö
+		//Í¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¶ï¿½ï¿½
 				//User user =(User) ac.getBean("myuser2");
 				//User user =(User) ac.getBean("myuser");
-				//Í¨¹ýid»ñÈ¡£¬Î¨Ò»
+				//Í¨ï¿½ï¿½idï¿½ï¿½È¡ï¿½ï¿½Î¨Ò»
 				User user1 =(User) ac.getBean("user");
 				User user2 =(User) ac.getBean("user");
-				//Í¨¹ýÀàÀàÐÍ»ñÈ¡£¬ÒªÇó¶ÔÏóÊÇµ¥ÀýµÄ
+				//Í¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í»ï¿½È¡ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Çµï¿½ï¿½ï¿½ï¿½
 				//User user =(User) ac.getBean(User.class);
-				System.out.println(user1==user2);//true==>µ¥Àý
+				System.out.println(user1==user2);//true==>ï¿½ï¿½ï¿½ï¿½
 				System.out.println(user1);
 				
-				//ÄÚ²¿Àà²âÊÔ
+				//ï¿½Ú²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 				UserWithInner.Location lo = (UserWithInner.Location)ac.getBean("innerLocation");
 				System.out.println(lo);
 				
-				//¹¤³§·½·¨²âÊÔ
+				//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 				UserService us =(UserService) ac.getBean("userService");
 				System.out.println(us);
-				//¹¹Ôìº¯Êý²âÊÔ
+				//ï¿½ï¿½ï¿½ìº¯ï¿½ï¿½ï¿½ï¿½ï¿½
 				UserWithCons userWithCons = (UserWithCons) ac.getBean("userWithCons");
 				System.out.println(userWithCons);
 				UserWithCons userWithCons2 = (UserWithCons) ac.getBean("userWithCons2");

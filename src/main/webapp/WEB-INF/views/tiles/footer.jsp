@@ -1,0 +1,1 @@
+<span style="font-size: 14px;"><p>Copyright <code class="xml plain">&copy;</code> lg.com</p></span> 

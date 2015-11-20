@@ -2,10 +2,11 @@ package com.myfirstmvnpro.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.springframework.beans.factory.annotation.Required;
 import org.springframework.stereotype.Component;
 
 @Component("user")
@@ -14,23 +15,19 @@ import org.springframework.stereotype.Component;
 public class User {
 	@Column(name="userID")
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
+	
 	private String name;
+	
 	private String username;
 	
 	@Column(name="passwordHash")
 	private String password;
 	
 	private String email;
-	//private UserWithCons userWithCons;
 	
 	public User(){}
-//	public User(UserWithCons userWithCons){
-//		this.userWithCons = userWithCons;
-//	}
-//	public UserWithCons getUserWithCons() {
-//		return userWithCons;
-//	}
 	
 	public Integer getId() {
 		return id;

@@ -1,12 +1,25 @@
-<!DOCTYPE tiles-definitions PUBLIC   
-   "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"   
-      "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
-<tiles-definitions>    
-   <definition name="template" template="/WEB-INF/views/main_template.jsp">
-   		<put-attribute name="top" value="/WEB-INF/views/tiles/userForm.jsp"/>
-   		<put-attribute name="side" value="/WEB-INF/views/tiles/userSignup.jsp"/>
-   </definition>
-   <definition name="home" extends="template">
-   		<put-attribute name="content" value="/WEB-INF/views/home.jsp"/>
-   </definition>    
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+<tiles-definitions>
+	<definition name="base.definition"
+		template="/WEB-INF/views/tiles/template.jsp">
+		<put-attribute name="top" value="/WEB-INF/views/tiles/top.jsp" />
+		<put-attribute name="side" value="/WEB-INF/views/tiles/side.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/views/tiles/footer.jsp" />
+	</definition>
+
+	<definition name="home" extends="base.definition">
+		<put-attribute name="title" value="Contact Manager" />
+		<put-attribute name="content" value="/WEB-INF/views/home.jsp" />
+	</definition>
+	<definition name="details" extends="base.definition">
+		<put-attribute name="title" value="User Details" />
+		<put-attribute name="content" value="/WEB-INF/views/users/details.jsp" />
+	</definition>
+	<definition name="regist" extends="base.definition">
+		<put-attribute name="title" value="User Regist" />
+		<put-attribute name="content" value="/WEB-INF/views/users/regist.jsp" />
+	</definition>
 </tiles-definitions>      
